@@ -44,8 +44,36 @@ public class BinarySearch<E extends Comparable<E>> {
 		return index;
 	}
 	
+	public void findIterative(E value) {
+		int left = 0;
+		int right = array.length - 1;
+		int index = -1;
+		
+		while (left <= right && index < 0) {
+			int mid = left + ((right - left) / 2);	
+			if (array[mid] == value) {
+				index = mid;
+				break;
+			} else if (value.compareTo(array[mid]) < 0) {
+				right = mid - 1;
+			} else {
+				left = mid + 1;
+			}
+		}
+		
+		System.out.println((index > -1) ?
+				"Value '" + value + 
+				"' was found iteratively "
+				+ "at index: " + index :
+				"Value '" + value + "' was "
+						+ "not found iteratively "
+						+ "in the dataset: " + 
+					Arrays.asList(array));
+	}
+	
 	public void search(E value) {
 		findRecursive(value);
+		findIterative(value);
 	}
 	
 	public static void main(String[] args) {
