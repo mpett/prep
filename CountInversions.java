@@ -3,63 +3,51 @@ package test;
 import java.util.*;
 
 public class CountInversions {
-	private static int inv = 0;
-	
 	public static void main(String[] args) {
-		System.out.println("Hello World");
-		handleInput();
-	}
-	
-	public static void handleInput() {
 		Scanner scanner = new Scanner(System.in);
-		int d = scanner.nextInt();
+		int t = scanner.nextInt();
 		
-		for (int i = 0; i < d; i++) {
+		for (int i = 0; i < t; i++) {
 			int n = scanner.nextInt();
-			int[] arr = new int[n];
+			int[] a = new int[n];
+			
 			for (int j = 0; j < n; j++) {
-				arr[j] = scanner.nextInt();
+				a[j] = scanner.nextInt();
 			}
-			System.out.println(countInversions(arr));
+			
+			System.out.println(countInversions(a));
 		}
-	}
-	
-	private static long countInversions(int[] arr) {
-		long numInversions = 0;
-		quickCount(arr, 0, arr.length - 1);
-		numInversions = inv;
-		return numInversions;
-	}
-	
-	private static void quickCount(int[] a, int lo, int hi) {
-		if (lo < hi) {
-			int p = partition(a, lo, hi);
-			quickCount(a, p + 1, hi);
-			quickCount(a, lo, p - 1);
-		}
-	}
-	
-	private static int partition(int[] a, int lo, int hi) {
-		int pivot = a[hi];
-		int i = lo - 1;
 		
-		for (int j = lo; j < hi; j++) {
-			if (a[j] < pivot) {
-				i++;
-				inv++;
-				int tmp = a[i];
-				a[i] = a[j];
-				a[j] = tmp;
-				
+		scanner.close();
+	}
+	
+	public static long countInversions(int[] a) {
+		int n = a.length;
+		if (n <= 1) {
+			return 0;
+		}
+		
+		int mid = n >> 1;
+		int[] left 
+			= Arrays.copyOfRange(a, 0, mid);
+		int[] right 
+			= Arrays.copyOfRange(a, mid, a.length);
+		long inversions = countInversions(left) 
+				+ countInversions(right);
+		int range = n - mid;
+		int iLeft = 0;
+		int iRight = 0;
+		
+		for (int i = 0; i < n; i++) {
+			if (iLeft < mid && (iRight >= range 
+					|| left[iLeft] <= right[iRight])) {
+				a[i] = left[iLeft++];
+				inversions += iRight;
+			} else if (iRight < range) {
+				a[i] = right[iRight++];
 			}
 		}
 		
-		inv++;
-		int tmp = a[i+1];
-		a[i+1] = a[hi];
-		a[hi] = tmp;
-		
-		return i+1;
-		
+		return inversions;
 	}
 }
