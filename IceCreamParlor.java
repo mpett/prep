@@ -17,16 +17,19 @@ public class IceCreamParlor {
 			Arrays.sort(menu);
 			
 			int[] cost = menu;
-			System.out.println(cost.length + " " +  cost[0] + " " + Arrays.asList(cost).indexOf(2));
-			indexOf(2, menu);
+			System.out.println(cost.length + " " +  
+					cost[0] + " " 
+						+ Arrays.asList(cost).indexOf(2));
 			printArray(cost);
 			
 			for (int i = 0; i < n; i++) {
 				int price = menu[i];
 				int complement = money - price;
 				if (binarySearch(menu, complement, -1, 0, n-1) != -1) {
-					int priceIndex = Arrays.asList(cost).indexOf(price);
-					int compIndex = Arrays.asList(cost).indexOf(complement);
+					int priceIndex = 
+							Arrays.asList(cost).indexOf(price);
+					int compIndex = 
+							Arrays.asList(cost).indexOf(complement);
 					System.out.println(priceIndex + " " + compIndex);
 					break;
 				}
@@ -42,7 +45,8 @@ public class IceCreamParlor {
 		System.out.println();
 	}
 	
-	public static int binarySearch(int[] a, int value, int index, int left, int right) {
+	public static int binarySearch(int[] a, int value, 
+						int index, int left, int right) {
 		if (left <= right) {
 			int midIndex = left + (right - left) / 2;
 			if (value == a[midIndex]) {
